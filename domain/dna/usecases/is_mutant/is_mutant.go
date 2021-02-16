@@ -2,13 +2,14 @@ package dnausecases
 
 import (
 	dnacontracts "github.com/miguelramirez93/mutant_detector/domain/dna/contracts"
+	nitrogenbaseutils "github.com/miguelramirez93/mutant_detector/domain/dna/utils/nitrogen_base"
 	dnavalidators "github.com/miguelramirez93/mutant_detector/domain/dna/validators"
 	apperrors "github.com/miguelramirez93/mutant_detector/shared/app_errors"
 )
 
 type isMutantUsecase struct{}
 
-// NewIsMutantUseCase creates new intance from DnaCheckUsecase contract
+// NewIsMutantUseCase creates new intance from Dnacontracts
 func NewIsMutantUseCase() dnacontracts.IsMutantUsecase {
 	return &isMutantUsecase{}
 }
@@ -19,5 +20,15 @@ func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
 		return false, err
 	}
 
+	repeatRange := 4
+	minCoincidences := 2
+
+	currentCoincidences := 0
+
+	currentCoincidences += nitrogenbaseutils.GetHorizontalCoincidences(dna, repeatRange, minCoincidences)
+
+	if currentCoincidences >= minCoincidences {
+		return true, nil
+	}
 	return false, nil
 }

@@ -2,10 +2,12 @@ package arrayutils
 
 // IsStringInRange check if strToCheck only contains elements in arrRange
 func IsStringInRange(strToCheck string, arrRange []string) bool {
-	foundElements := 0
-	for _, rangeElement := range arrRange {
-		for _, strElement := range strToCheck {
-			if string(strElement) == rangeElement {
+
+	for _, runeToCheck := range strToCheck {
+		foundElements := 0
+		for _, rangeElement := range arrRange {
+			strElement := string(runeToCheck)
+			if strElement == rangeElement {
 				foundElements++
 				break
 			}

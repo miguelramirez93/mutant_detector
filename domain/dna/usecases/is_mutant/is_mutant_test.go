@@ -20,6 +20,28 @@ func TestIsMutantPositiveValue(t *testing.T) {
 	}
 }
 
+func TestIsMutantNegativeValueNLessThanRange(t *testing.T) {
+	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaHumanNoInRange)
+	if err != nil {
+		t.Errorf("spected err to be nil, got %v", err)
+	} else if !isMutant {
+		t.Logf("spected isMutant to be false, dna matrix is nxn with n < repeatRange")
+	} else {
+		t.Errorf("spected isMutant to be false, dna matrix is nxn with n < repeatRange, got %v", isMutant)
+	}
+}
+
+func TestIsMutantPositiveValueHorizontalOnlyCases(t *testing.T) {
+	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaMutantHorizontal)
+	if err != nil {
+		t.Errorf("spected err to be nil, got %v", err)
+	} else if isMutant {
+		t.Logf("spected isMutant to be true with only horizontal coincidences")
+	} else {
+		t.Errorf("spected isMutant to be true with only horizontal coincidences, got %v", isMutant)
+	}
+}
+
 func TestIsMutantWrongDimInput(t *testing.T) {
 	_, err := isMutantUcaseInstance.Execute(mocks.DnaBadDimInput)
 	if err != nil && err.Err == apperrors.ErrBadParamInput {
