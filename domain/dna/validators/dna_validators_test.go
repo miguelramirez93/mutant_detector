@@ -28,3 +28,15 @@ func TestIsValidDnaWrongDimCase(t *testing.T) {
 		t.Errorf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
 	}
 }
+
+func TestIsValidDnaWrongLeterCase(t *testing.T) {
+	err := IsValidDna(mocks.DnaWrongLeterInput)
+
+	if err == nil {
+		t.Errorf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+	} else if err.Err == apperrors.ErrBadParamInput {
+		t.Logf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+	} else {
+		t.Errorf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+	}
+}

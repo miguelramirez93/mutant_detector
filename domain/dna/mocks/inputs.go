@@ -11,4 +11,8 @@ var (
 	DnaHumanNoInRange = []string{"ATG", "CAG", "TTA"}
 	// DnaMutantHorizontal dns with only horizontal coincidences
 	DnaMutantHorizontal = []string{"AAAAGT", "CCCCGC", "TTGGGG", "ATTTTG", "CCCCTA", "TCACTG"}
+	// DnaMutantHorizontalCase2 dns with only horizontal coincidences
+	DnaMutantHorizontalCase2 = []string{"AAAAAA", "CCCCGC", "TTGGGG", "ATTTTG", "CCCCTA", "TCACTG"}
+	// DnaMutantVertical dns with only vertical coincidences
+	DnaMutantVertical = []string{"ACCTGT", "ACCCGC", "ACGGGG", "ACTTTG", "ACCCTG", "ACACTG"}
 )

@@ -30,5 +30,12 @@ func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
 	if currentCoincidences >= minCoincidences {
 		return true, nil
 	}
+
+	currentCoincidences += nitrogenbaseutils.GetVerticalCoincidences(dna, repeatRange, minCoincidences)
+
+	if currentCoincidences >= minCoincidences {
+		return true, nil
+	}
+
 	return false, nil
 }
