@@ -24,9 +24,9 @@ func TestGetHorizontalCoincidencesCase2(t *testing.T) {
 	testCoincidences := GetHorizontalCoincidences(mocks.DnaMutantHorizontalCase2, repeatRange, maxCoincidences)
 
 	if testCoincidences == 6 {
-		t.Logf("spected result equal to %v, got %v", maxCoincidences, testCoincidences)
+		t.Logf("spected result equal to 6, got %v", testCoincidences)
 	} else {
-		t.Errorf("spected result equal to %v, got %v", maxCoincidences, testCoincidences)
+		t.Errorf("spected result equal to 6, got %v", testCoincidences)
 	}
 }
 
@@ -48,8 +48,44 @@ func TestGetVerticalCoincidencesCase2(t *testing.T) {
 	testCoincidences := GetVerticalCoincidences(mocks.DnaMutantVertical, repeatRange, maxCoincidences)
 
 	if testCoincidences == 7 {
-		t.Logf("spected result equal to %v, got %v", maxCoincidences, testCoincidences)
+		t.Logf("spected result equal to 7, got %v", testCoincidences)
 	} else {
-		t.Errorf("spected result equal to %v, got %v", maxCoincidences, testCoincidences)
+		t.Errorf("spected result equal to 7, got %v", testCoincidences)
+	}
+}
+
+func TestGetObliqueUpLeftCoincidences(t *testing.T) {
+	repeatRange := 4
+	maxCoincidences := -1
+	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaCorrectFormatInput, repeatRange, maxCoincidences)
+
+	if testCoincidences == 1 {
+		t.Logf("spected result equal to 1, got %v", testCoincidences)
+	} else {
+		t.Errorf("spected result equal to 1, got %v", testCoincidences)
+	}
+}
+
+func TestGetObliqueUpLeftCoincidencesCase2(t *testing.T) {
+	repeatRange := 4
+	maxCoincidences := -1
+	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueCase2, repeatRange, maxCoincidences)
+
+	if testCoincidences == 2 {
+		t.Logf("spected result equal to 1, got %v", testCoincidences)
+	} else {
+		t.Errorf("spected result equal to 1, got %v", testCoincidences)
+	}
+}
+
+func TestGetObliqueUpLeftCoincidencesCase3(t *testing.T) {
+	repeatRange := 3
+	maxCoincidences := -1
+	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences)
+
+	if testCoincidences == 3 {
+		t.Logf("spected result equal to 1, got %v", testCoincidences)
+	} else {
+		t.Errorf("spected result equal to 1, got %v", testCoincidences)
 	}
 }

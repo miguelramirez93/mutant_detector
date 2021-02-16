@@ -15,4 +15,8 @@ var (
 	DnaMutantHorizontalCase2 = []string{"AAAAAA", "CCCCGC", "TTGGGG", "ATTTTG", "CCCCTA", "TCACTG"}
 	// DnaMutantVertical dns with only vertical coincidences
 	DnaMutantVertical = []string{"ACCTGT", "ACCCGC", "ACGGGG", "ACTTTG", "ACCCTG", "ACACTG"}
+	//DnaObliqueCase2 dna data with spected format
+	DnaObliqueCase2 = []string{"ATGCGA", "CATTGC", "TTATGT", "AGAATG", "CCCCTA", "TCACTG"}
+	//DnaObliqueCase3 dna data with spected format
+	DnaObliqueCase3 = []string{"ATGCGA", "CATTGC", "TTATGT", "AGAATG", "CCCCAA", "TCACTA"}
 )
