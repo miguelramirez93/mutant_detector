@@ -3,8 +3,8 @@ package dnavalidators
 import (
 	"fmt"
 
-	apperrors "github.com/miguelramirez93/mutants_detector/shared/app_errors"
-	arrayutils "github.com/miguelramirez93/mutants_detector/utils/array_utils"
+	apperrors "github.com/miguelramirez93/mutant_detector/shared/app_errors"
+	arrayutils "github.com/miguelramirez93/mutant_detector/utils/array_utils"
 )
 
 var acceptedNotrogenBases = []string{"A", "T", "C", "G"}

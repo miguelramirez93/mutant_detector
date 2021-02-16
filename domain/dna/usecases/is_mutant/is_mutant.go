@@ -1,9 +1,9 @@
 package dnausecases
 
 import (
-	dnacontracts "github.com/miguelramirez93/mutants_detector/domain/dna/contracts"
-	dnavalidators "github.com/miguelramirez93/mutants_detector/domain/dna/validators"
-	apperrors "github.com/miguelramirez93/mutants_detector/shared/app_errors"
+	dnacontracts "github.com/miguelramirez93/mutant_detector/domain/dna/contracts"
+	dnavalidators "github.com/miguelramirez93/mutant_detector/domain/dna/validators"
+	apperrors "github.com/miguelramirez93/mutant_detector/shared/app_errors"
 )
 
 type isMutantUsecase struct{}

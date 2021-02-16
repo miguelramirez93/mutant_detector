@@ -3,8 +3,8 @@ package dnavalidators
 import (
 	"testing"
 
-	"github.com/miguelramirez93/mutants_detector/domain/dna/mocks"
-	apperrors "github.com/miguelramirez93/mutants_detector/shared/app_errors"
+	"github.com/miguelramirez93/mutant_detector/domain/dna/mocks"
+	apperrors "github.com/miguelramirez93/mutant_detector/shared/app_errors"
 )
 
 func TestIsValidDnaSuccessCase(t *testing.T) {
