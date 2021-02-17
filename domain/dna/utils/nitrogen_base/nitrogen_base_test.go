@@ -54,10 +54,10 @@ func TestGetVerticalCoincidencesCase2(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpLeftCoincidences(t *testing.T) {
+func TestGetObliqueUpRightCoincidences(t *testing.T) {
 	repeatRange := 4
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaCorrectFormatInput, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaCorrectFormatInput, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 1 {
 		t.Logf("spected result equal to 1, got %v", testCoincidences)
@@ -66,10 +66,10 @@ func TestGetObliqueUpLeftCoincidences(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpLeftCoincidencesCase2(t *testing.T) {
+func TestGetObliqueUpRightCoincidencesCase2(t *testing.T) {
 	repeatRange := 4
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueCase2, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueCase2, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 2 {
 		t.Logf("spected result equal to 2, got %v", testCoincidences)
@@ -78,10 +78,10 @@ func TestGetObliqueUpLeftCoincidencesCase2(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpLeftCoincidencesCase3(t *testing.T) {
+func TestGetObliqueUpRightCoincidencesCase3(t *testing.T) {
 	repeatRange := 3
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 3 {
 		t.Logf("spected result equal to 3, got %v", testCoincidences)
@@ -90,10 +90,10 @@ func TestGetObliqueUpLeftCoincidencesCase3(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpLeftCoincidencesWithOutMainDiag(t *testing.T) {
+func TestGetObliqueUpRightCoincidencesWithOutMainDiag(t *testing.T) {
 	repeatRange := 3
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, false)
+	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, false)
 
 	if testCoincidences == 1 {
 		t.Logf("spected result equal to 1, got %v", testCoincidences)
@@ -102,10 +102,10 @@ func TestGetObliqueUpLeftCoincidencesWithOutMainDiag(t *testing.T) {
 	}
 }
 
-func TestGetObliqueDownRightCoincidencesCase1(t *testing.T) {
+func TestGetObliqueDownLeftCoincidencesCase1(t *testing.T) {
 	repeatRange := 4
 	maxCoincidences := -1
-	testCoincidences := GetObliqueDowmRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeft, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 1 {
 		t.Logf("spected result equal to 1, got %v", testCoincidences)
@@ -114,10 +114,10 @@ func TestGetObliqueDownRightCoincidencesCase1(t *testing.T) {
 	}
 }
 
-func TestGetObliqueDownRightCoincidencesCase2(t *testing.T) {
+func TestGetObliqueDownLeftCoincidencesCase2(t *testing.T) {
 	repeatRange := 3
 	maxCoincidences := -1
-	testCoincidences := GetObliqueDowmRightCoincidences(mocks.DnaObliqueDownRightCase2, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeftCase2, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 4 {
 		t.Logf("spected result equal to 4, got %v", testCoincidences)
@@ -126,10 +126,10 @@ func TestGetObliqueDownRightCoincidencesCase2(t *testing.T) {
 	}
 }
 
-func TestGetObliqueDownRightCoincidencesWithOutMainDiagonal(t *testing.T) {
+func TestGetObliqueDownLeftCoincidencesWithOutMainDiagonal(t *testing.T) {
 	repeatRange := 3
 	maxCoincidences := -1
-	testCoincidences := GetObliqueDowmRightCoincidences(mocks.DnaObliqueDownRightCase2, repeatRange, maxCoincidences, false)
+	testCoincidences := GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeftCase2, repeatRange, maxCoincidences, false)
 
 	if testCoincidences == 2 {
 		t.Logf("spected result equal to 2, got %v", testCoincidences)
@@ -138,10 +138,10 @@ func TestGetObliqueDownRightCoincidencesWithOutMainDiagonal(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpRightCoincidencesWithOutMainDiagonalCase1(t *testing.T) {
+func TestGetObliqueUpLeftCoincidencesCase1(t *testing.T) {
 	repeatRange := 4
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueUpRightCase1, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 2 {
 		t.Logf("spected result equal to 2, got %v", testCoincidences)
@@ -150,10 +150,10 @@ func TestGetObliqueUpRightCoincidencesWithOutMainDiagonalCase1(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpRightCoincidencesWithOutMainDiagonalCase2(t *testing.T) {
+func TestGetObliqueUpLeftCoincidencesCase2(t *testing.T) {
 	repeatRange := 3
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueUpRightCase1, repeatRange, maxCoincidences, true)
+	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, true)
 
 	if testCoincidences == 4 {
 		t.Logf("spected result equal to 4, got %v", testCoincidences)
@@ -162,10 +162,10 @@ func TestGetObliqueUpRightCoincidencesWithOutMainDiagonalCase2(t *testing.T) {
 	}
 }
 
-func TestGetObliqueUpRightCoincidencesWithOutMainDiagonalCase3(t *testing.T) {
+func TestGetObliqueUpLeftCoincidencesWithOutMainDiagonalCase3(t *testing.T) {
 	repeatRange := 3
 	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueUpRightCase1, repeatRange, maxCoincidences, false)
+	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, false)
 
 	if testCoincidences == 2 {
 		t.Logf("spected result equal to 2, got %v", testCoincidences)
