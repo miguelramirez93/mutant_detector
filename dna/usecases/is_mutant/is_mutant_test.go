@@ -3,8 +3,8 @@ package dnausecases
 import (
 	"testing"
 
-	"github.com/miguelramirez93/mutant_detector/domain/dna/mocks"
-	apperrors "github.com/miguelramirez93/mutant_detector/shared/app_errors"
+	"github.com/miguelramirez93/mutant_detector/dna/mocks"
+	"github.com/miguelramirez93/mutant_detector/domain"
 )
 
 var isMutantUcaseInstance = NewIsMutantUseCase()
@@ -44,20 +44,20 @@ func TestIsMutantPositiveValueHorizontalOnlyCases(t *testing.T) {
 
 func TestIsMutantWrongDimInput(t *testing.T) {
 	_, err := isMutantUcaseInstance.Execute(mocks.DnaBadDimInput)
-	if err != nil && err.Err == apperrors.ErrBadParamInput {
-		t.Logf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+	if err != nil && err.Err == domain.ErrBadParamInput {
+		t.Logf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
 	} else {
-		t.Errorf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+		t.Errorf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
 	}
 
 }
 
 func TestIsMutantWrongLeterInput(t *testing.T) {
 	_, err := isMutantUcaseInstance.Execute(mocks.DnaWrongLeterInput)
-	if err != nil && err.Err == apperrors.ErrBadParamInput {
-		t.Logf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+	if err != nil && err.Err == domain.ErrBadParamInput {
+		t.Logf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
 	} else {
-		t.Errorf("spected err to be %v, got %v", apperrors.ErrBadParamInput, err)
+		t.Errorf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
 	}
 
 }

@@ -1,20 +1,19 @@
 package dnausecases
 
 import (
-	dnacontracts "github.com/miguelramirez93/mutant_detector/domain/dna/contracts"
-	nitrogenbaseutils "github.com/miguelramirez93/mutant_detector/domain/dna/utils/nitrogen_base"
-	dnavalidators "github.com/miguelramirez93/mutant_detector/domain/dna/validators"
-	apperrors "github.com/miguelramirez93/mutant_detector/shared/app_errors"
+	dnavalidators "github.com/miguelramirez93/mutant_detector/dna/dna_validators"
+	nitrogenbaseutils "github.com/miguelramirez93/mutant_detector/dna/utils/nitrogen_base"
+	"github.com/miguelramirez93/mutant_detector/domain"
 )
 
 type isMutantUsecase struct{}
 
 // NewIsMutantUseCase creates new intance from Dnacontracts
-func NewIsMutantUseCase() dnacontracts.IsMutantUsecase {
+func NewIsMutantUseCase() domain.IsMutantUsecase {
 	return &isMutantUsecase{}
 }
 
-func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
+func (uc *isMutantUsecase) Execute(dna []string) (bool, *domain.AppError) {
 	err := dnavalidators.IsValidDna(dna)
 	if err != nil {
 		return false, err

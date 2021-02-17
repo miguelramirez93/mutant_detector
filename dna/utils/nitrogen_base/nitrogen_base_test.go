@@ -3,7 +3,7 @@ package nitrogenbaseutils
 import (
 	"testing"
 
-	"github.com/miguelramirez93/mutant_detector/domain/dna/mocks"
+	"github.com/miguelramirez93/mutant_detector/dna/mocks"
 )
 
 func TestGetHorizontalCoincidences(t *testing.T) {
