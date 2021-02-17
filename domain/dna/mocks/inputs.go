@@ -23,4 +23,6 @@ var (
 	DnaObliqueDownRight = []string{"AAAAAA", "ACCCGC", "TAGGGG", "ATATTG", "CCCATA", "TCACTG"}
 	//DnaObliqueDownRightCase2 dna data with spected format
 	DnaObliqueDownRightCase2 = []string{"GAAAAA", "AGCCGC", "TAGGGG", "ATAGTG", "CCTAGA", "TCATTG"}
+	//DnaObliqueUpRightCase1 dna data with spected format
+	DnaObliqueUpRightCase1 = []string{"ACGTAG", "CGTAGC", "GTTGAC", "TGGTAA", "CGGTAA", "GCGATA"}
 )

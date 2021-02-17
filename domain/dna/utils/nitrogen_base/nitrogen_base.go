@@ -252,3 +252,70 @@ func GetObliqueDowmRightCoincidences(dna []string, repeatRange, maxCoincidences 
 
 	return currentCoincidences
 }
+
+// GetObliqueUpRightCoincidences return nitrogen base up right coincidences in the given dna matrix
+// If maxCoincidences > 0 will stop after find maxCoincidences.
+func GetObliqueUpRightCoincidences(dna []string, repeatRange, maxCoincidences int, withMainDiag bool) int {
+
+	yref := len(dna[0]) - 2
+
+	if withMainDiag {
+		yref++
+	}
+
+	maxCoincidencesPerGroup := math.Floor(float64((len(dna[0])) / repeatRange))
+	currentCoincidences := 0
+
+	if maxCoincidencesPerGroup == 0 {
+		return 0
+	}
+
+	fixedRepeatRange := repeatRange - 1
+
+	for yref >= 0 {
+		rowCoincidences := 0
+		y1 := yref
+		x1 := 0
+		x2 := y1 + int(repeatRange)
+		y2 := y1 - int(repeatRange)
+		for (y1 - fixedRepeatRange) >= 0 {
+			y2 = y1 - fixedRepeatRange
+			x2 = x1 + fixedRepeatRange
+			nitrogenBaseCoincidences := 0
+			for y2 < y1 && x2 > x1 {
+				xy1 := string(dna[x1][y1])
+				xy2 := string(dna[x2][y2])
+				if xy1 == xy2 {
+					y2++
+					x2--
+					nitrogenBaseCoincidences++
+
+				} else {
+					break
+				}
+			}
+			if nitrogenBaseCoincidences == fixedRepeatRange {
+				rowCoincidences++
+				currentCoincidences++
+				if currentCoincidences == maxCoincidences {
+					return currentCoincidences
+				}
+
+				if rowCoincidences == int(maxCoincidencesPerGroup) {
+					break
+				}
+
+			}
+			if rowCoincidences > 0 {
+				x1 += repeatRange
+				y1 -= repeatRange
+			} else {
+				x1++
+				y1--
+			}
+		}
+		yref--
+	}
+
+	return currentCoincidences
+}
