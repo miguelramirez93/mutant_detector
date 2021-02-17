@@ -211,7 +211,7 @@ func GetObliqueDowmLeftCoincidences(dna []string, repeatRange, maxCoincidences i
 		y1 := 0
 		x2 := y1 + int(repeatRange)
 		y2 := y1 + int(repeatRange)
-		for y1 <= (len(dna[x1])-repeatRange) && x1 <= (len(dna)-repeatRange) {
+		for y1 <= (len(dna[0])-repeatRange) && x1 <= (len(dna)-repeatRange) {
 			y2 = y1 + fixedRepeatRange
 			x2 = x1 + fixedRepeatRange
 			nitrogenBaseCoincidences := 0
@@ -342,18 +342,18 @@ func GetObliqueDownRightCoincidences(dna []string, repeatRange, maxCoincidences 
 	for xref < len(dna) {
 		rowCoincidences := 0
 		x1 := xref
-		y1 := 0
+		y1 := len(dna[0]) - 1
 		x2 := y1 + int(repeatRange)
-		y2 := y1 + int(repeatRange)
-		for y1 <= (len(dna[x1])-repeatRange) && x1 <= (len(dna)-repeatRange) {
-			y2 = y1 + fixedRepeatRange
+		y2 := y1 - int(repeatRange)
+		for x1 <= (len(dna) - repeatRange) {
+			y2 = y1 - fixedRepeatRange
 			x2 = x1 + fixedRepeatRange
 			nitrogenBaseCoincidences := 0
-			for y2 > y1 && x2 > x1 {
+			for y2 < y1 && x2 > x1 {
 				xy1 := string(dna[x1][y1])
 				xy2 := string(dna[x2][y2])
 				if xy1 == xy2 {
-					y2--
+					y2++
 					x2--
 					nitrogenBaseCoincidences++
 
@@ -375,10 +375,10 @@ func GetObliqueDownRightCoincidences(dna []string, repeatRange, maxCoincidences 
 			}
 			if rowCoincidences > 0 {
 				x1 += repeatRange
-				y1 += repeatRange
+				y1 -= repeatRange
 			} else {
 				x1++
-				y1++
+				y1--
 			}
 		}
 		xref++
