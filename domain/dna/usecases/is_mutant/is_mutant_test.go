@@ -61,3 +61,47 @@ func TestIsMutantWrongLeterInput(t *testing.T) {
 	}
 
 }
+
+func TestIsMutantPositiveValueObliqueUpLeftOnlyCases(t *testing.T) {
+	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueUpLeftCase1)
+	if err != nil {
+		t.Errorf("spected err to be nil, got %v", err)
+	} else if isMutant {
+		t.Logf("spected isMutant to be true with only ObliqueUpLeft coincidences")
+	} else {
+		t.Errorf("spected isMutant to be true with only ObliqueUpLeft coincidences, got %v", isMutant)
+	}
+}
+
+func TestIsMutantPositiveValueObliqueDownRightOnlyCases(t *testing.T) {
+	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueDownRight)
+	if err != nil {
+		t.Errorf("spected err to be nil, got %v", err)
+	} else if isMutant {
+		t.Logf("spected isMutant to be true with only DownRight coincidences")
+	} else {
+		t.Errorf("spected isMutant to be true with only DownRight coincidences, got %v", isMutant)
+	}
+}
+
+func TestIsMutantPositiveValueObliqueUpRightOnlyCases(t *testing.T) {
+	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueCase2)
+	if err != nil {
+		t.Errorf("spected err to be nil, got %v", err)
+	} else if isMutant {
+		t.Logf("spected isMutant to be true with only UpRight coincidences")
+	} else {
+		t.Errorf("spected isMutant to be true with only UpRight coincidences, got %v", isMutant)
+	}
+}
+
+func TestIsMutantPositiveValueObliqueDownLeftOnlyCases(t *testing.T) {
+	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueDownLeft)
+	if err != nil {
+		t.Errorf("spected err to be nil, got %v", err)
+	} else if isMutant {
+		t.Logf("spected isMutant to be true with only DownLeft coincidences")
+	} else {
+		t.Errorf("spected isMutant to be true with only DownLeft coincidences, got %v", isMutant)
+	}
+}

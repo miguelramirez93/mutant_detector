@@ -21,7 +21,7 @@ func GetHorizontalCoincidences(dna []string, repeatRange, maxCoincidences int) i
 		rowCoincidences := 0
 		y1 := 0
 		x2 := x1
-		y2 := y1 + int(repeatRange)
+		y2 := y1 + repeatRange
 		for y1 <= (len(dna[x1]) - repeatRange) {
 			y2 = y1 + fixedRepeatRange
 			nitrogenBaseCoincidences := 0
@@ -80,7 +80,7 @@ func GetVerticalCoincidences(dna []string, repeatRange, maxCoincidences int) int
 		rowCoincidences := 0
 		x1 := 0
 		y2 := y1
-		x2 := x1 + int(repeatRange)
+		x2 := x1 + repeatRange
 		for x1 <= (len(dna[y1]) - repeatRange) {
 			x2 = x1 + fixedRepeatRange
 			nitrogenBaseCoincidences := 0
@@ -142,8 +142,8 @@ func GetObliqueUpRightCoincidences(dna []string, repeatRange, maxCoincidences in
 		rowCoincidences := 0
 		y1 := yref
 		x1 := 0
-		x2 := y1 + int(repeatRange)
-		y2 := y1 + int(repeatRange)
+		x2 := y1 + repeatRange
+		y2 := y1 + repeatRange
 		for y1 <= (len(dna[x1]) - repeatRange) {
 			y2 = y1 + fixedRepeatRange
 			x2 = x1 + fixedRepeatRange
@@ -209,8 +209,8 @@ func GetObliqueDowmLeftCoincidences(dna []string, repeatRange, maxCoincidences i
 		rowCoincidences := 0
 		x1 := xref
 		y1 := 0
-		x2 := y1 + int(repeatRange)
-		y2 := y1 + int(repeatRange)
+		x2 := y1 + repeatRange
+		y2 := y1 + repeatRange
 		for y1 <= (len(dna[0])-repeatRange) && x1 <= (len(dna)-repeatRange) {
 			y2 = y1 + fixedRepeatRange
 			x2 = x1 + fixedRepeatRange
@@ -276,8 +276,8 @@ func GetObliqueUpLeftCoincidences(dna []string, repeatRange, maxCoincidences int
 		rowCoincidences := 0
 		y1 := yref
 		x1 := 0
-		x2 := y1 + int(repeatRange)
-		y2 := y1 - int(repeatRange)
+		x2 := y1 + repeatRange
+		y2 := y1 - repeatRange
 		for (y1 - fixedRepeatRange) >= 0 {
 			y2 = y1 - fixedRepeatRange
 			x2 = x1 + fixedRepeatRange
@@ -343,8 +343,8 @@ func GetObliqueDownRightCoincidences(dna []string, repeatRange, maxCoincidences 
 		rowCoincidences := 0
 		x1 := xref
 		y1 := len(dna[0]) - 1
-		x2 := y1 + int(repeatRange)
-		y2 := y1 - int(repeatRange)
+		x2 := y1 + repeatRange
+		y2 := y1 - repeatRange
 		for x1 <= (len(dna) - repeatRange) {
 			y2 = y1 - fixedRepeatRange
 			x2 = x1 + fixedRepeatRange

@@ -37,5 +37,29 @@ func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
 		return true, nil
 	}
 
+	currentCoincidences += nitrogenbaseutils.GetObliqueUpLeftCoincidences(dna, repeatRange, minCoincidences, true)
+
+	if currentCoincidences >= minCoincidences {
+		return true, nil
+	}
+
+	currentCoincidences += nitrogenbaseutils.GetObliqueDownRightCoincidences(dna, repeatRange, minCoincidences, false)
+
+	if currentCoincidences >= minCoincidences {
+		return true, nil
+	}
+
+	currentCoincidences += nitrogenbaseutils.GetObliqueUpRightCoincidences(dna, repeatRange, minCoincidences, true)
+
+	if currentCoincidences >= minCoincidences {
+		return true, nil
+	}
+
+	currentCoincidences += nitrogenbaseutils.GetObliqueDowmLeftCoincidences(dna, repeatRange, minCoincidences, false)
+
+	if currentCoincidences >= minCoincidences {
+		return true, nil
+	}
+
 	return false, nil
 }
