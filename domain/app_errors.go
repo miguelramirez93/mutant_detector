@@ -4,8 +4,8 @@ import "errors"
 
 // AppError Single struct that represents spected errors in the app
 type AppError struct {
-	Err         error
-	Description string
+	Err         error  `json:"error"`
+	Description string `json:"descrition"`
 }
 
 var (
