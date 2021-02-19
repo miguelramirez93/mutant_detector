@@ -50,9 +50,10 @@ func (h *DnaHandler) IsMutant(c *gin.Context) {
 	}
 
 	if !isMutant {
-		c.JSON(http.StatusForbidden, nil)
+		c.Writer.WriteHeader(http.StatusForbidden)
+		return
 	}
 
-	c.JSON(http.StatusOK, nil)
+	c.Writer.WriteHeader(http.StatusOK)
 	return
 }
