@@ -1,0 +1,48 @@
+basePath: /
+definitions:
+  domain.DeliveryError:
+    properties:
+      description:
+        type: string
+      error:
+        type: string
+    type: object
+  models.IsMutantReqBody:
+    properties:
+      dna:
+        items:
+          type: string
+        type: array
+    required:
+    - dna
+    type: object
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /mutant:
+    post:
+      consumes:
+      - application/json
+      description: return true or false by dna input
+      parameters:
+      - description: dna data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.IsMutantReqBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/domain.DeliveryError'
+      summary: Check if given dna is from a mutant
+swagger: "2.0"
