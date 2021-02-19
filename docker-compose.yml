@@ -1,0 +1,10 @@
+version: "3.5"
+
+services:
+  mutant-detector:
+    image: local/mutant_detector
+    container_name: mutant_detector
+    environment: 
+      PORT: 8080
+    ports: 
+      - 8080:8080

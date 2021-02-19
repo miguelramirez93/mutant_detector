@@ -1,9 +1,9 @@
-package dnausecases
+package usecases
 
 import (
-	dnavalidators "github.com/miguelramirez93/mutant_detector/dna/dna_validators"
-	nitrogenbaseutils "github.com/miguelramirez93/mutant_detector/dna/utils/nitrogen_base"
-	"github.com/miguelramirez93/mutant_detector/domain"
+	nitrogenbaseutils "mutant_detector/dna/utils/nitrogen_base"
+	"mutant_detector/dna/validators"
+	"mutant_detector/domain"
 )
 
 type isMutantUsecase struct{}
@@ -14,7 +14,7 @@ func NewIsMutantUseCase() domain.IsMutantUsecase {
 }
 
 func (uc *isMutantUsecase) Execute(dna []string) (bool, *domain.AppError) {
-	err := dnavalidators.IsValidDna(dna)
+	err := validators.IsValidDna(dna)
 	if err != nil {
 		return false, err
 	}

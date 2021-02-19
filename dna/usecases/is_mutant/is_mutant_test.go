@@ -1,107 +1,69 @@
-package dnausecases
+package usecases_test
 
 import (
+	"fmt"
 	"testing"
 
-	"github.com/miguelramirez93/mutant_detector/dna/mocks"
-	"github.com/miguelramirez93/mutant_detector/domain"
+	"mutant_detector/dna/mocks"
+	"mutant_detector/domain"
+
+	usecases "mutant_detector/dna/usecases/is_mutant"
+
+	"github.com/stretchr/testify/assert"
 )
 
-var isMutantUcaseInstance = NewIsMutantUseCase()
+var isMutantUcaseInstance = usecases.NewIsMutantUseCase()
 
-func TestIsMutantPositiveValue(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaCorrectFormatInput)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if isMutant {
-		t.Logf("spected isMutant to be true")
-	} else {
-		t.Errorf("spected isMutant to be true, got %v", isMutant)
-	}
-}
+func TestIsMutantUCase(t *testing.T) {
+	t.Run("Should return true for a expected mutant dna input", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaCorrectFormatInput)
+		fmt.Println(err)
+		assert.Nil(t, err)
+		assert.Equal(t, true, isMutant)
+	})
+	t.Run("Should return false for a expected human dna input", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaHumanInput)
+		fmt.Println(err)
+		assert.Nil(t, err)
+		assert.Equal(t, false, isMutant)
+	})
+	t.Run("Should return error when dna matrix is not nxn", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaBadDimInput)
+		assert.Equal(t, domain.WrongDimInputError, err)
+		assert.Equal(t, false, isMutant)
+	})
+	t.Run("Should return error when dna matrix contain wrong nitrogen bases", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaWrongLeterInput)
+		assert.Equal(t, domain.WrongNitrogenBaseError, err)
+		assert.Equal(t, false, isMutant)
+	})
+	t.Run("Should return true with horizontal only coincidences matrix", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaMutantHorizontal)
+		assert.Nil(t, err)
+		assert.Equal(t, true, isMutant)
+	})
 
-func TestIsMutantNegativeValueNLessThanRange(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaHumanNoInRange)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if !isMutant {
-		t.Logf("spected isMutant to be false, dna matrix is nxn with n < repeatRange")
-	} else {
-		t.Errorf("spected isMutant to be false, dna matrix is nxn with n < repeatRange, got %v", isMutant)
-	}
-}
+	t.Run("Should return true with ObliqueUpLeft only coincidences matrix", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueUpLeftCase1)
+		assert.Nil(t, err)
+		assert.Equal(t, true, isMutant)
+	})
 
-func TestIsMutantPositiveValueHorizontalOnlyCases(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaMutantHorizontal)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if isMutant {
-		t.Logf("spected isMutant to be true with only horizontal coincidences")
-	} else {
-		t.Errorf("spected isMutant to be true with only horizontal coincidences, got %v", isMutant)
-	}
-}
+	t.Run("Should return true with ObliqueDownRight only coincidences matrix", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueDownRight)
+		assert.Nil(t, err)
+		assert.Equal(t, true, isMutant)
+	})
 
-func TestIsMutantWrongDimInput(t *testing.T) {
-	_, err := isMutantUcaseInstance.Execute(mocks.DnaBadDimInput)
-	if err != nil && err.Err == domain.ErrBadParamInput {
-		t.Logf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
-	} else {
-		t.Errorf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
-	}
+	t.Run("Should return true with ObliqueUpRight only coincidences matrix", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueCase2)
+		assert.Nil(t, err)
+		assert.Equal(t, true, isMutant)
+	})
 
-}
-
-func TestIsMutantWrongLeterInput(t *testing.T) {
-	_, err := isMutantUcaseInstance.Execute(mocks.DnaWrongLeterInput)
-	if err != nil && err.Err == domain.ErrBadParamInput {
-		t.Logf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
-	} else {
-		t.Errorf("spected err to be %v, got %v", domain.ErrBadParamInput, err)
-	}
-
-}
-
-func TestIsMutantPositiveValueObliqueUpLeftOnlyCases(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueUpLeftCase1)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if isMutant {
-		t.Logf("spected isMutant to be true with only ObliqueUpLeft coincidences")
-	} else {
-		t.Errorf("spected isMutant to be true with only ObliqueUpLeft coincidences, got %v", isMutant)
-	}
-}
-
-func TestIsMutantPositiveValueObliqueDownRightOnlyCases(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueDownRight)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if isMutant {
-		t.Logf("spected isMutant to be true with only DownRight coincidences")
-	} else {
-		t.Errorf("spected isMutant to be true with only DownRight coincidences, got %v", isMutant)
-	}
-}
-
-func TestIsMutantPositiveValueObliqueUpRightOnlyCases(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueCase2)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if isMutant {
-		t.Logf("spected isMutant to be true with only UpRight coincidences")
-	} else {
-		t.Errorf("spected isMutant to be true with only UpRight coincidences, got %v", isMutant)
-	}
-}
-
-func TestIsMutantPositiveValueObliqueDownLeftOnlyCases(t *testing.T) {
-	isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueDownLeft)
-	if err != nil {
-		t.Errorf("spected err to be nil, got %v", err)
-	} else if isMutant {
-		t.Logf("spected isMutant to be true with only DownLeft coincidences")
-	} else {
-		t.Errorf("spected isMutant to be true with only DownLeft coincidences, got %v", isMutant)
-	}
+	t.Run("Should return true with ObliqueDownLeft only coincidences matrix", func(t *testing.T) {
+		isMutant, err := isMutantUcaseInstance.Execute(mocks.DnaObliqueDownLeft)
+		assert.Nil(t, err)
+		assert.Equal(t, true, isMutant)
+	})
 }
