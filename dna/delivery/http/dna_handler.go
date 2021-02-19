@@ -24,6 +24,15 @@ func NewDnaHandler(r *gin.Engine, isMutantUcase domain.IsMutantUsecase) {
 	r.POST("/mutant", handler.IsMutant)
 }
 
+// IsMutant godoc
+// @Summary Check if given dna is from a mutant
+// @Description return true or false by dna input
+// @Accept  json
+// @Produce  json
+// @Param body body models.IsMutantReqBody true "dna data"
+// @Success 200
+// @Failure 403 {object} domain.DeliveryError
+// @Router /mutant [post]
 // IsMutant handlr for http request to isMutant use case
 func (h *DnaHandler) IsMutant(c *gin.Context) {
 	var (
