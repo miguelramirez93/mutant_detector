@@ -7,6 +7,8 @@ COPY . ${APP_DIR}
 WORKDIR ${APP_DIR}
 RUN go get ./...
 RUN go test -cover ./...
+RUN go test ./... -coverprofile cover.out
+RUN go tool cover -func cover.out
 
 FROM src as dev
 CMD ["refresh", "run"]
