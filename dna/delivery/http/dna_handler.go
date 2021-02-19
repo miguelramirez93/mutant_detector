@@ -1,11 +1,13 @@
 package http
 
 import (
-	"mutants_detector/dna/delivery/http/models"
+	"mutant_detector/dna/delivery/http/models"
+	"mutant_detector/shared/mappers"
 	"net/http"
 
+	"mutant_detector/domain"
+
 	"github.com/gin-gonic/gin"
-	"github.com/miguelramirez93/mutant_detector/domain"
 )
 
 // DnaHandler http handler struct for dna use cases
@@ -13,7 +15,7 @@ type DnaHandler struct {
 	IsMutantUcase domain.IsMutantUsecase
 }
 
-// NewDnaHandler creates a new instance of DnaHandler
+// NewDnaHandler creates a new instance of DnaHandler with corresponding routes
 func NewDnaHandler(r *gin.Engine, isMutantUcase domain.IsMutantUsecase) {
 	handler := &DnaHandler{
 		IsMutantUcase: isMutantUcase,
@@ -25,23 +27,25 @@ func NewDnaHandler(r *gin.Engine, isMutantUcase domain.IsMutantUsecase) {
 // IsMutant handlr for http request to isMutant use case
 func (h *DnaHandler) IsMutant(c *gin.Context) {
 	var (
-		req      models.IsMutantReqBody
-		appError *domain.AppError
-		isMutant bool
+		req           models.IsMutantReqBody
+		appError      *domain.AppError
+		deliveryError *domain.DeliveryError
+		isMutant      bool
 	)
 	if err := c.ShouldBindJSON(&req); err != nil {
-		appError = &domain.AppError{
-			Err:         domain.ErrBadParamInput,
+		deliveryError = &domain.DeliveryError{
+			Err:         domain.ErrBadParamInput.Error(),
 			Description: err.Error(),
 		}
-		c.JSON(http.StatusBadRequest, appError)
+		c.JSON(http.StatusBadRequest, deliveryError)
 		return
 	}
 
 	isMutant, appError = h.IsMutantUcase.Execute(req.Dna)
 
 	if appError != nil {
-		c.JSON(http.StatusBadRequest, appError)
+		deliveryError = mappers.MapAppErrorToDeliveryError(appError)
+		c.JSON(http.StatusBadRequest, deliveryError)
 		return
 	}
 

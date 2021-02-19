@@ -1,211 +1,128 @@
-package nitrogenbaseutils
+package nitrogenbaseutils_test
 
 import (
 	"testing"
 
-	"github.com/miguelramirez93/mutant_detector/dna/mocks"
+	"mutant_detector/dna/mocks"
+
+	nitrogenbaseutils "mutant_detector/dna/utils/nitrogen_base"
+
+	"github.com/stretchr/testify/assert"
 )
 
-func TestGetHorizontalCoincidences(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := 2
-	testCoincidences := GetHorizontalCoincidences(mocks.DnaMutantHorizontal, repeatRange, maxCoincidences)
+func TestNitrogenBaseUtils(t *testing.T) {
+	t.Run("Should get Horizontal coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := 2
+		testCoincidences := nitrogenbaseutils.GetHorizontalCoincidences(mocks.DnaMutantHorizontal, repeatRange, maxCoincidences)
+		assert.Equal(t, maxCoincidences, testCoincidences)
+	})
 
-	if testCoincidences == maxCoincidences {
-		t.Logf("spected result equal to %v, got %v", 6, testCoincidences)
-	} else {
-		t.Errorf("spected result equal to %v, got %v", 6, testCoincidences)
-	}
-}
+	t.Run("Should get Horizontal coincidences (more than 1 per row)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetHorizontalCoincidences(mocks.DnaMutantHorizontalCase2, repeatRange, maxCoincidences)
+		assert.Equal(t, 6, testCoincidences)
+	})
 
-func TestGetHorizontalCoincidencesCase2(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetHorizontalCoincidences(mocks.DnaMutantHorizontalCase2, repeatRange, maxCoincidences)
+	t.Run("Should get Vertical coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := 2
+		testCoincidences := nitrogenbaseutils.GetVerticalCoincidences(mocks.DnaMutantVertical, repeatRange, maxCoincidences)
+		assert.Equal(t, maxCoincidences, testCoincidences)
+	})
 
-	if testCoincidences == 6 {
-		t.Logf("spected result equal to 6, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 6, got %v", testCoincidences)
-	}
-}
+	t.Run("Should get Vertical coincidences (more than 1 per row)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetVerticalCoincidences(mocks.DnaMutantVertical, repeatRange, maxCoincidences)
+		assert.Equal(t, 7, testCoincidences)
+	})
 
-func TestGetVerticalCoincidences(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := 2
-	testCoincidences := GetVerticalCoincidences(mocks.DnaMutantVertical, repeatRange, maxCoincidences)
+	t.Run("Should get ObliqueUpRight coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpRightCoincidences(mocks.DnaCorrectFormatInput, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 1, testCoincidences)
+	})
 
-	if testCoincidences == maxCoincidences {
-		t.Logf("spected result equal to %v, got %v", maxCoincidences, testCoincidences)
-	} else {
-		t.Errorf("spected result equal to %v, got %v", maxCoincidences, testCoincidences)
-	}
-}
+	t.Run("Should get ObliqueUpRight coincidences (no more than 1 per row) case 2", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpRightCoincidences(mocks.DnaObliqueCase2, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 2, testCoincidences)
+	})
 
-func TestGetVerticalCoincidencesCase2(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetVerticalCoincidences(mocks.DnaMutantVertical, repeatRange, maxCoincidences)
+	t.Run("Should get ObliqueUpRight coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpRightCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 3, testCoincidences)
+	})
 
-	if testCoincidences == 7 {
-		t.Logf("spected result equal to 7, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 7, got %v", testCoincidences)
-	}
-}
+	t.Run("Should get ObliqueUpRight coincidences (without main diagonal)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpRightCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, false)
+		assert.Equal(t, 1, testCoincidences)
+	})
 
-func TestGetObliqueUpRightCoincidences(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaCorrectFormatInput, repeatRange, maxCoincidences, true)
+	t.Run("Should get ObliqueDownLeft coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeft, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 1, testCoincidences)
+	})
 
-	if testCoincidences == 1 {
-		t.Logf("spected result equal to 1, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 1, got %v", testCoincidences)
-	}
-}
+	t.Run("Should get ObliqueDownLeft coincidences (more than 1 per row)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeftCase2, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 4, testCoincidences)
+	})
 
-func TestGetObliqueUpRightCoincidencesCase2(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueCase2, repeatRange, maxCoincidences, true)
+	t.Run("Should get ObliqueDownLeft coincidences (without main diagonal)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeftCase2, repeatRange, maxCoincidences, false)
+		assert.Equal(t, 2, testCoincidences)
+	})
 
-	if testCoincidences == 2 {
-		t.Logf("spected result equal to 2, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 2, got %v", testCoincidences)
-	}
-}
+	t.Run("Should get ObliqueUpLeft coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 2, testCoincidences)
+	})
 
-func TestGetObliqueUpRightCoincidencesCase3(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 3 {
-		t.Logf("spected result equal to 3, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 3, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueUpRightCoincidencesWithOutMainDiag(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpRightCoincidences(mocks.DnaObliqueCase3, repeatRange, maxCoincidences, false)
-
-	if testCoincidences == 1 {
-		t.Logf("spected result equal to 1, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 1, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueDownLeftCoincidencesCase1(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := -1
-	testCoincidences := GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeft, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 1 {
-		t.Logf("spected result equal to 1, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 1, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueDownLeftCoincidencesCase2(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeftCase2, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 4 {
-		t.Logf("spected result equal to 4, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 4, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueDownLeftCoincidencesWithOutMainDiagonal(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueDowmLeftCoincidences(mocks.DnaObliqueDownLeftCase2, repeatRange, maxCoincidences, false)
-
-	if testCoincidences == 2 {
-		t.Logf("spected result equal to 2, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 2, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueUpLeftCoincidencesCase1(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 2 {
-		t.Logf("spected result equal to 2, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 2, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueUpLeftCoincidencesCase2(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 4 {
-		t.Logf("spected result equal to 4, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 4, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueUpLeftCoincidencesWithOutMainDiagonalCase3(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, false)
-
-	if testCoincidences == 2 {
-		t.Logf("spected result equal to 2, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 2, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueDownRightCoincidencesCase1(t *testing.T) {
-	repeatRange := 4
-	maxCoincidences := -1
-	testCoincidences := GetObliqueDownRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 2 {
-		t.Logf("spected result equal to 2, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 2, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueDownRightCoincidencesCase2(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueDownRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, true)
-
-	if testCoincidences == 4 {
-		t.Logf("spected result equal to 4, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 4, got %v", testCoincidences)
-	}
-}
-
-func TestGetObliqueDownRightCoincidencesCase3(t *testing.T) {
-	repeatRange := 3
-	maxCoincidences := -1
-	testCoincidences := GetObliqueDownRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, false)
-
-	if testCoincidences == 2 {
-		t.Logf("spected result equal to 2, got %v", testCoincidences)
-	} else {
-		t.Errorf("spected result equal to 2, got %v", testCoincidences)
-	}
+	t.Run("Should get ObliqueUpLeft coincidences (more than 1 per row)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 4, testCoincidences)
+	})
+	t.Run("Should get ObliqueUpLeft coincidences (without main diagonal)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueUpLeftCoincidences(mocks.DnaObliqueUpLeftCase1, repeatRange, maxCoincidences, false)
+		assert.Equal(t, 2, testCoincidences)
+	})
+	t.Run("Should get ObliqueDownRight coincidences (no more than 1 per row)", func(t *testing.T) {
+		repeatRange := 4
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueDownRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 2, testCoincidences)
+	})
+	t.Run("Should get ObliqueDownRight coincidences (more than 1 per row)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueDownRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, true)
+		assert.Equal(t, 4, testCoincidences)
+	})
+	t.Run("Should get ObliqueDownRight coincidences (without main diagonal)", func(t *testing.T) {
+		repeatRange := 3
+		maxCoincidences := -1
+		testCoincidences := nitrogenbaseutils.GetObliqueDownRightCoincidences(mocks.DnaObliqueDownRight, repeatRange, maxCoincidences, false)
+		assert.Equal(t, 2, testCoincidences)
+	})
 }
