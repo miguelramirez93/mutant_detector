@@ -1,4 +1,4 @@
-package domain
+package apperrors
 
 import "errors"
 
@@ -17,4 +17,6 @@ type DeliveryError struct {
 var (
 	// ErrBadParamInput will throw if the given request-body or params is not valid
 	ErrBadParamInput = errors.New("bad-params-input")
+	// ErrStoringData will throw if there is an error at store data
+	ErrStoringData = errors.New("error-storing-data")
 )

@@ -1,11 +1,28 @@
 version: "3.5"
 
 services:
-  mutant-detector:
+  mutant-detector-db:
+    image: postgres:13-alpine
+    ports: 
+      - 5432:5432
+    environment: 
+      POSTGRES_USER: magneto
+      POSTGRES_PASSWORD: magneto
+      POSTGRES_DB: mutant_detector
+
+  mutant-detector-api:
     image: local/mutant_detector
     container_name: mutant_detector
     environment: 
       PORT: 8080
       HTTP_DOMAIN: "http://localhost:8080"
+      DB_HOST: mutant-detector-db
+      DB_USER: magneto
+      DB_PASS: magneto
+      DB_NAME: mutant_detector
+      DB_PORT: 5432
     ports: 
       - 8080:8080
+    depends_on: 
+      - mutant-detector-db
+  

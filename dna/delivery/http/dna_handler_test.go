@@ -7,7 +7,7 @@ import (
 	"fmt"
 	httpdelivery "mutant_detector/dna/delivery/http"
 	"mutant_detector/dna/delivery/http/models"
-	"mutant_detector/domain"
+	apperrors "mutant_detector/domain/app_errors"
 	"mutant_detector/domain/mocks"
 	"net/http"
 	"net/http/httptest"
@@ -46,7 +46,7 @@ func TestIsMutant(t *testing.T) {
 
 	t.Run("Should return 400 status code and bad-input-error if wrong body was sent", func(t *testing.T) {
 
-		var errorResponse domain.DeliveryError
+		var errorResponse apperrors.DeliveryError
 		router := gin.Default()
 		mockIsmutantUCase := new(mocks.IsMutantUseCaseMock)
 		rr := httptest.NewRecorder()
@@ -73,14 +73,14 @@ func TestIsMutant(t *testing.T) {
 		fmt.Println(errorResponse)
 		responseError := errors.New(errorResponse.Err)
 
-		assert.Equal(t, responseError, domain.ErrBadParamInput)
+		assert.Equal(t, responseError, apperrors.ErrBadParamInput)
 		assert.Equal(t, http.StatusBadRequest, rr.Code)
 
 	})
 
 	t.Run("Should return 400 status code and bad-input-error if isMutant ucase returns an error", func(t *testing.T) {
 
-		var errorResponse domain.DeliveryError
+		var errorResponse apperrors.DeliveryError
 		router := gin.Default()
 		mockIsmutantUCase := new(mocks.IsMutantUseCaseMock)
 		rr := httptest.NewRecorder()
@@ -88,8 +88,8 @@ func TestIsMutant(t *testing.T) {
 			Dna: dnamocks.DnaCorrectFormatInput,
 		}
 
-		expectedAppError := &domain.AppError{
-			Err:         domain.ErrBadParamInput,
+		expectedAppError := &apperrors.AppError{
+			Err:         apperrors.ErrBadParamInput,
 			Description: "some",
 		}
 

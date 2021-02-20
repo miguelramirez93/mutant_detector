@@ -3,6 +3,7 @@ package managers
 import (
 	"fmt"
 	"mutant_detector/dna/delivery/http"
+	repository "mutant_detector/dna/repository/dna_report"
 	usecases "mutant_detector/dna/usecases/is_mutant"
 	"os"
 
@@ -22,9 +23,12 @@ func HTTPInitDocumentation(r *gin.Engine) {
 }
 
 // HTTPInitHandlers handlers initialitation with coresponding usecases for http delivery
-func HTTPInitHandlers(r *gin.Engine) {
+func HTTPInitHandlers(r *gin.Engine, dbConnInstance interface{}) {
+	//Repository instances
+	dnaReportRepository := repository.NewGormIsMutantRepository(dbConnInstance)
+
 	// UserCases instanses
-	isMutantUseCase := usecases.NewIsMutantUseCase()
+	isMutantUseCase := usecases.NewIsMutantUseCase(dnaReportRepository)
 
 	// Init handlers
 	http.NewDnaHandler(r, isMutantUseCase)

@@ -5,7 +5,7 @@ import (
 
 	"mutant_detector/dna/mocks"
 	"mutant_detector/dna/validators"
-	domain "mutant_detector/domain"
+	"mutant_detector/domain/dna"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -18,11 +18,11 @@ func TestValidators(t *testing.T) {
 
 	t.Run("Should return bad param input error if dna matrix is not NXN", func(t *testing.T) {
 		err := validators.IsValidDna(mocks.DnaBadDimInput)
-		assert.Equal(t, domain.WrongDimInputError, err)
+		assert.Equal(t, dna.WrongDimInputError, err)
 	})
 
 	t.Run("Should return bad param input error if dna matrix is not NXN", func(t *testing.T) {
 		err := validators.IsValidDna(mocks.DnaWrongLeterInput)
-		assert.Equal(t, domain.WrongNitrogenBaseError, err)
+		assert.Equal(t, dna.WrongNitrogenBaseError, err)
 	})
 }
