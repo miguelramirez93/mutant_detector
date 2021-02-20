@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	environmentutils "mutant_detector/shared/utils/environment_utils"
+	"os"
 )
 
 // PostgresGetConnectionString get connection string formated from env vars for postgresDB
@@ -13,7 +14,13 @@ func PostgresGetConnectionString() string {
 	dbName := environmentutils.GetOsEnv("DB_NAME")
 	port := environmentutils.GetOsEnv("DB_PORT")
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, pass, dbName, port)
+	sslmode, ok := os.LookupEnv("DB_SSL")
+
+	if !ok {
+		sslmode = "disable"
+	}
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", host, user, pass, dbName, port, sslmode)
 
 	return dsn
 }
