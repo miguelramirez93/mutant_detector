@@ -17,10 +17,10 @@ func PostgresGetConnectionString() string {
 	sslmode, ok := os.LookupEnv("DB_SSL")
 
 	if !ok {
-		sslmode = "disable"
+		sslmode = "sslmode=disable"
 	}
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", host, user, pass, dbName, port, sslmode)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s %s", host, user, pass, dbName, port, sslmode)
 
 	return dsn
 }
