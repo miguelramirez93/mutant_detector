@@ -1,19 +1,26 @@
 package usecases
 
 import (
+	"fmt"
 	nitrogenbaseutils "mutant_detector/dna/utils/nitrogen_base"
 	"mutant_detector/dna/validators"
-	"mutant_detector/domain"
+	apperrors "mutant_detector/domain/app_errors"
+	"mutant_detector/domain/dna"
+	dnadomain "mutant_detector/domain/dna"
 )
 
-type isMutantUsecase struct{}
-
-// NewIsMutantUseCase creates new intance from Dnacontracts
-func NewIsMutantUseCase() domain.IsMutantUsecase {
-	return &isMutantUsecase{}
+type isMutantUsecase struct {
+	dnaReportRepository dna.DNAReportRepository
 }
 
-func (uc *isMutantUsecase) Execute(dna []string) (bool, *domain.AppError) {
+// NewIsMutantUseCase creates new intance from Dnacontracts
+func NewIsMutantUseCase(dnaReportRepo dna.DNAReportRepository) dna.IsMutantUsecase {
+	return &isMutantUsecase{
+		dnaReportRepository: dnaReportRepo,
+	}
+}
+
+func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
 	err := validators.IsValidDna(dna)
 	if err != nil {
 		return false, err
@@ -26,39 +33,57 @@ func (uc *isMutantUsecase) Execute(dna []string) (bool, *domain.AppError) {
 
 	currentCoincidences += nitrogenbaseutils.GetHorizontalCoincidences(dna, repeatRange, minCoincidences)
 
+	isMutant := false
+
+	defer func() {
+		dnaReportToStore := dnadomain.DnaReport{
+			Dna:      dna,
+			IsMutant: isMutant,
+		}
+		if _, err = uc.dnaReportRepository.StoreDNAReport(dnaReportToStore); err != nil {
+			fmt.Println("Error storing DNA data", err)
+		}
+	}()
+
 	if currentCoincidences >= minCoincidences {
-		return true, nil
+		isMutant = true
+		return isMutant, nil
 	}
 
 	currentCoincidences += nitrogenbaseutils.GetVerticalCoincidences(dna, repeatRange, minCoincidences)
 
 	if currentCoincidences >= minCoincidences {
-		return true, nil
+		isMutant = true
+		return isMutant, nil
 	}
 
 	currentCoincidences += nitrogenbaseutils.GetObliqueUpLeftCoincidences(dna, repeatRange, minCoincidences, true)
 
 	if currentCoincidences >= minCoincidences {
-		return true, nil
+		isMutant = true
+		return isMutant, nil
 	}
 
 	currentCoincidences += nitrogenbaseutils.GetObliqueDownRightCoincidences(dna, repeatRange, minCoincidences, false)
 
 	if currentCoincidences >= minCoincidences {
-		return true, nil
+		isMutant = true
+		return isMutant, nil
 	}
 
 	currentCoincidences += nitrogenbaseutils.GetObliqueUpRightCoincidences(dna, repeatRange, minCoincidences, true)
 
 	if currentCoincidences >= minCoincidences {
-		return true, nil
+		isMutant = true
+		return isMutant, nil
 	}
 
 	currentCoincidences += nitrogenbaseutils.GetObliqueDowmLeftCoincidences(dna, repeatRange, minCoincidences, false)
 
 	if currentCoincidences >= minCoincidences {
-		return true, nil
+		isMutant = true
+		return isMutant, nil
 	}
 
-	return false, nil
+	return isMutant, nil
 }

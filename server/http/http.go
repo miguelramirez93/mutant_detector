@@ -10,17 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title Swagger Example API
+// @title Mutant detector API
 // @version 1.0
 // @description This is a sample server celler server.
 // @termsOfService http://swagger.io/terms/
 // @BasePath /
 
 // HTTPInitServer init http delivery server
-func HTTPInitServer() {
+func HTTPInitServer(dbConnInstance interface{}) {
 	router := gin.Default()
 
-	managers.HTTPInitHandlers(router)
+	managers.HTTPInitHandlers(router, dbConnInstance)
 
 	serverPort := config.HTTPGetServerPort()
 

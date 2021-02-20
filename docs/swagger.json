@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a sample server celler server.",
-        "title": "Swagger Example API",
+        "title": "Mutant detector API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {},
         "version": "1.0"
@@ -37,7 +37,33 @@
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/domain.DeliveryError"
+                            "$ref": "#/definitions/apperrors.DeliveryError"
+                        }
+                    }
+                }
+            }
+        },
+        "/stats": {
+            "post": {
+                "description": "return db stats about dna",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "returns db stats about dna",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dna.DnaReportStats"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/apperrors.DeliveryError"
                         }
                     }
                 }
@@ -45,7 +71,7 @@
         }
     },
     "definitions": {
-        "domain.DeliveryError": {
+        "apperrors.DeliveryError": {
             "type": "object",
             "properties": {
                 "description": {
@@ -53,6 +79,20 @@
                 },
                 "error": {
                     "type": "string"
+                }
+            }
+        },
+        "dna.DnaReportStats": {
+            "type": "object",
+            "properties": {
+                "count_human_dna": {
+                    "type": "integer"
+                },
+                "count_mutant_dna": {
+                    "type": "integer"
+                },
+                "ratio": {
+                    "type": "number"
                 }
             }
         },

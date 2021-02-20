@@ -1,11 +1,20 @@
 basePath: /
 definitions:
-  domain.DeliveryError:
+  apperrors.DeliveryError:
     properties:
       description:
         type: string
       error:
         type: string
+    type: object
+  dna.DnaReportStats:
+    properties:
+      count_human_dna:
+        type: integer
+      count_mutant_dna:
+        type: integer
+      ratio:
+        type: number
     type: object
   models.IsMutantReqBody:
     properties:
@@ -20,7 +29,7 @@ info:
   contact: {}
   description: This is a sample server celler server.
   termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+  title: Mutant detector API
   version: "1.0"
 paths:
   /mutant:
@@ -43,6 +52,23 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/domain.DeliveryError'
+            $ref: '#/definitions/apperrors.DeliveryError'
       summary: Check if given dna is from a mutant
+  /stats:
+    post:
+      consumes:
+      - application/json
+      description: return db stats about dna
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dna.DnaReportStats'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apperrors.DeliveryError'
+      summary: returns db stats about dna
 swagger: "2.0"

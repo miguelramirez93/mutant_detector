@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"mutant_detector/domain"
+	apperrors "mutant_detector/domain/app_errors"
 
 	"github.com/stretchr/testify/mock"
 )
@@ -12,11 +12,11 @@ type IsMutantUseCaseMock struct {
 }
 
 // Execute mocked function of Execute ucase method
-func (m *IsMutantUseCaseMock) Execute(dna []string) (bool, *domain.AppError) {
+func (m *IsMutantUseCaseMock) Execute(dna []string) (bool, *apperrors.AppError) {
 	args := m.Called(dna)
-	var mockedErr *domain.AppError
+	var mockedErr *apperrors.AppError
 	if args.Get(1) != nil {
-		mockedErr, _ = args.Get(1).(*domain.AppError)
+		mockedErr, _ = args.Get(1).(*apperrors.AppError)
 	}
 
 	return args.Bool(0), mockedErr

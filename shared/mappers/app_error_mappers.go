@@ -1,10 +1,12 @@
 package mappers
 
-import "mutant_detector/domain"
+import (
+	apperrors "mutant_detector/domain/app_errors"
+)
 
 // MapAppErrorToDeliveryError map given appError to deliveryError
-func MapAppErrorToDeliveryError(appError *domain.AppError) *domain.DeliveryError {
-	return &domain.DeliveryError{
+func MapAppErrorToDeliveryError(appError *apperrors.AppError) *apperrors.DeliveryError {
+	return &apperrors.DeliveryError{
 		Err:         appError.Err.Error(),
 		Description: appError.Description,
 	}
