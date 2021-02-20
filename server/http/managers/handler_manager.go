@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"mutant_detector/dna/delivery/http"
 	repository "mutant_detector/dna/repository/dna_report"
-	usecases "mutant_detector/dna/usecases/is_mutant"
+	getdnareportstatsucase "mutant_detector/dna/usecases/get_dna_report"
+	ismutantucase "mutant_detector/dna/usecases/is_mutant"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -28,10 +29,11 @@ func HTTPInitHandlers(r *gin.Engine, dbConnInstance interface{}) {
 	dnaReportRepository := repository.NewGormIsMutantRepository(dbConnInstance)
 
 	// UserCases instanses
-	isMutantUseCase := usecases.NewIsMutantUseCase(dnaReportRepository)
+	isMutantUseCase := ismutantucase.NewIsMutantUseCase(dnaReportRepository)
+	getDNAReportStats := getdnareportstatsucase.NewGetDnaReportUseCase(dnaReportRepository)
 
 	// Init handlers
-	http.NewDnaHandler(r, isMutantUseCase)
+	http.NewDnaHandler(r, isMutantUseCase, getDNAReportStats)
 	HTTPInitDocumentation(r)
 
 }

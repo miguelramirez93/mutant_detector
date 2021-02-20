@@ -29,5 +29,12 @@ var AcceptedNitrogenBases = []string{"A", "T", "C", "G"}
 type DnaReport struct {
 	ID       int     `json:"id" gorm:"primaryKey;autoIncrement"`
 	Dna      DnaType `json:"dna" gorm:"unique;index;type:jsonb"`
-	IsMutant bool    `json:"isMutant"`
+	IsMutant bool    `json:"isMutant" gorm:"column:is_mutant"`
+}
+
+// DnaReportSTats represents report stats for dna.
+type DnaReportStats struct {
+	CountMutantDNA int     `json:"count_mutant_dna"`
+	CountHumanDNA  int     `json:"count_human_dna"`
+	Ratio          float64 `json:"ratio"`
 }

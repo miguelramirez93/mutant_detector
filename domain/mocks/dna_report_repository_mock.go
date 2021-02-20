@@ -27,6 +27,20 @@ func (m *DNAReportRepositoryMock) StoreDNAReport(dnaReport dna.DnaReport) (*dna.
 	return mockedResult, mockedErr
 }
 
+// GetDNAReportsByIsMutantResult mocked function of GetDNAReportsByIsMutantResult repository method
+func (m *DNAReportRepositoryMock) GetDNAReportsByIsMutantResult(result bool) ([]dna.DnaReport, *apperrors.AppError) {
+	args := m.Called(result)
+	var mockedErr *apperrors.AppError
+	var mockedResult []dna.DnaReport
+	if args.Get(0) != nil {
+		mockedResult, _ = args.Get(0).([]dna.DnaReport)
+	}
+	if args.Get(1) != nil {
+		mockedErr, _ = args.Get(1).(*apperrors.AppError)
+	}
+	return mockedResult, mockedErr
+}
+
 var (
 	StoreDNAReportSuccess = dna.DnaReport{
 		Dna:      mocks.DnaCorrectFormatInput,

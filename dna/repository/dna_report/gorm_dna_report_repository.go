@@ -38,3 +38,17 @@ func (r *gormIsMutantRepository) StoreDNAReport(dnaReport dna.DnaReport) (*dna.D
 
 	return &dnaReport, nil
 }
+
+func (r *gormIsMutantRepository) GetDNAReportsByIsMutantResult(resultToSearch bool) ([]dna.DnaReport, *apperrors.AppError) {
+	var foundReports []dna.DnaReport
+	m := make(map[string]interface{})
+	m["is_mutant"] = resultToSearch
+	result := r.db.Where(m).Find(&foundReports)
+	if result.Error != nil {
+		return nil, &apperrors.AppError{
+			Err:         result.Error,
+			Description: "Error getting report data",
+		}
+	}
+	return foundReports, nil
+}

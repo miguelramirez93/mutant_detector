@@ -24,6 +24,7 @@ func TestIsMutant(t *testing.T) {
 	t.Run("Should return http 200 status code for mutant", func(t *testing.T) {
 		router := gin.Default()
 		mockIsmutantUCase := new(mocks.IsMutantUseCaseMock)
+		mockGetDNAReportsStatsUseCase := new(mocks.GetDNAReportsStatsUseCaseMock)
 		rr := httptest.NewRecorder()
 		mockedReqBody := models.IsMutantReqBody{
 			Dna: dnamocks.DnaCorrectFormatInput,
@@ -31,7 +32,7 @@ func TestIsMutant(t *testing.T) {
 
 		mockIsmutantUCase.On("Execute", dnamocks.DnaCorrectFormatInput).Return(true, nil)
 
-		httpdelivery.NewDnaHandler(router, mockIsmutantUCase)
+		httpdelivery.NewDnaHandler(router, mockIsmutantUCase, mockGetDNAReportsStatsUseCase)
 
 		marshaledBody, err := json.Marshal(mockedReqBody)
 		assert.NoError(t, err)
@@ -49,6 +50,7 @@ func TestIsMutant(t *testing.T) {
 		var errorResponse apperrors.DeliveryError
 		router := gin.Default()
 		mockIsmutantUCase := new(mocks.IsMutantUseCaseMock)
+		mockGetDNAReportsStatsUseCase := new(mocks.GetDNAReportsStatsUseCaseMock)
 		rr := httptest.NewRecorder()
 		mockedReqBody := map[string]interface{}{
 			"test": dnamocks.DnaCorrectFormatInput,
@@ -56,7 +58,7 @@ func TestIsMutant(t *testing.T) {
 
 		mockIsmutantUCase.On("Execute", dnamocks.DnaCorrectFormatInput).Return(true, nil)
 
-		httpdelivery.NewDnaHandler(router, mockIsmutantUCase)
+		httpdelivery.NewDnaHandler(router, mockIsmutantUCase, mockGetDNAReportsStatsUseCase)
 
 		marshaledBody, err := json.Marshal(mockedReqBody)
 		assert.NoError(t, err)
@@ -83,6 +85,7 @@ func TestIsMutant(t *testing.T) {
 		var errorResponse apperrors.DeliveryError
 		router := gin.Default()
 		mockIsmutantUCase := new(mocks.IsMutantUseCaseMock)
+		mockGetDNAReportsStatsUseCase := new(mocks.GetDNAReportsStatsUseCaseMock)
 		rr := httptest.NewRecorder()
 		mockedReqBody := models.IsMutantReqBody{
 			Dna: dnamocks.DnaCorrectFormatInput,
@@ -95,7 +98,7 @@ func TestIsMutant(t *testing.T) {
 
 		mockIsmutantUCase.On("Execute", dnamocks.DnaCorrectFormatInput).Return(false, expectedAppError)
 
-		httpdelivery.NewDnaHandler(router, mockIsmutantUCase)
+		httpdelivery.NewDnaHandler(router, mockIsmutantUCase, mockGetDNAReportsStatsUseCase)
 
 		marshaledBody, err := json.Marshal(mockedReqBody)
 		assert.NoError(t, err)
@@ -119,6 +122,7 @@ func TestIsMutant(t *testing.T) {
 	t.Run("Should return 403 status code for human", func(t *testing.T) {
 		router := gin.Default()
 		mockIsmutantUCase := new(mocks.IsMutantUseCaseMock)
+		mockGetDNAReportsStatsUseCase := new(mocks.GetDNAReportsStatsUseCaseMock)
 		rr := httptest.NewRecorder()
 		mockedReqBody := models.IsMutantReqBody{
 			Dna: dnamocks.DnaCorrectFormatInput,
@@ -126,7 +130,7 @@ func TestIsMutant(t *testing.T) {
 
 		mockIsmutantUCase.On("Execute", dnamocks.DnaCorrectFormatInput).Return(false, nil)
 
-		httpdelivery.NewDnaHandler(router, mockIsmutantUCase)
+		httpdelivery.NewDnaHandler(router, mockIsmutantUCase, mockGetDNAReportsStatsUseCase)
 
 		marshaledBody, err := json.Marshal(mockedReqBody)
 		assert.NoError(t, err)

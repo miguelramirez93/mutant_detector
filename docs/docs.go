@@ -53,7 +53,33 @@ var doc = `{
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/domain.DeliveryError"
+                            "$ref": "#/definitions/apperrors.DeliveryError"
+                        }
+                    }
+                }
+            }
+        },
+        "/stats": {
+            "post": {
+                "description": "return db stats about dna",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "returns db stats about dna",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dna.DnaReportStats"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/apperrors.DeliveryError"
                         }
                     }
                 }
@@ -61,7 +87,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "domain.DeliveryError": {
+        "apperrors.DeliveryError": {
             "type": "object",
             "properties": {
                 "description": {
@@ -69,6 +95,20 @@ var doc = `{
                 },
                 "error": {
                     "type": "string"
+                }
+            }
+        },
+        "dna.DnaReportStats": {
+            "type": "object",
+            "properties": {
+                "count_human_dna": {
+                    "type": "integer"
+                },
+                "count_mutant_dna": {
+                    "type": "integer"
+                },
+                "ratio": {
+                    "type": "number"
                 }
             }
         },
@@ -104,7 +144,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "",
 	BasePath:    "/",
 	Schemes:     []string{},
-	Title:       "Swagger Example API",
+	Title:       "Mutant detector API",
 	Description: "This is a sample server celler server.",
 }
 
