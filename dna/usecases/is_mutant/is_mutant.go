@@ -7,6 +7,7 @@ import (
 	apperrors "mutant_detector/domain/app_errors"
 	"mutant_detector/domain/dna"
 	dnadomain "mutant_detector/domain/dna"
+	queueutils "mutant_detector/shared/utils/queue_utils"
 )
 
 type isMutantUsecase struct {
@@ -40,9 +41,13 @@ func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
 			Dna:      dna,
 			IsMutant: isMutant,
 		}
-		if _, err = uc.dnaReportRepository.StoreDNAReport(dnaReportToStore); err != nil {
-			fmt.Println("Error storing DNA data", err)
-		}
+
+		queueutils.QueueJobWithTimmer(250, func() {
+			if _, err = uc.dnaReportRepository.StoreDNAReport(dnaReportToStore); err != nil {
+				fmt.Println("Error storing DNA data", err)
+			}
+		})
+
 	}()
 
 	if currentCoincidences >= minCoincidences {
