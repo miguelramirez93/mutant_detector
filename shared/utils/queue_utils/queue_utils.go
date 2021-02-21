@@ -1,14 +1,29 @@
 package queueutils
 
-import "time"
+import (
+	"log"
+	"time"
+)
 
-// QueueJobWithTimmer queue jobs with a basic fifo queue drive by time intervals
-func QueueJobWithTimmer(millisecondsInterval int, job func()) {
-	timer1 := time.NewTimer(time.Duration(millisecondsInterval) * time.Millisecond)
-	timer2 := time.NewTimer(time.Duration(millisecondsInterval) * time.Millisecond)
-	<-timer2.C
+var jobQueue = make(chan func(), 1000)
+
+// QueueJob queue jobs with a basic fifo queue
+func QueueJob(job func()) {
+	jobQueue <- job
+}
+
+// WaitForJobQueue init the job queue bufered chan
+func WaitForJobQueue() {
+	log.Println("Init job queue")
 	go func() {
-		<-timer1.C
-		job()
+		for {
+			timer1 := time.NewTimer(time.Duration(250) * time.Millisecond)
+			<-timer1.C
+			select {
+			case job := <-jobQueue:
+				job()
+			}
+
+		}
 	}()
 }

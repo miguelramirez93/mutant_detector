@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"fmt"
+	"log"
 	nitrogenbaseutils "mutant_detector/dna/utils/nitrogen_base"
 	"mutant_detector/dna/validators"
 	apperrors "mutant_detector/domain/app_errors"
@@ -42,9 +42,9 @@ func (uc *isMutantUsecase) Execute(dna []string) (bool, *apperrors.AppError) {
 			IsMutant: isMutant,
 		}
 
-		queueutils.QueueJobWithTimmer(250, func() {
+		queueutils.QueueJob(func() {
 			if _, err = uc.dnaReportRepository.StoreDNAReport(dnaReportToStore); err != nil {
-				fmt.Println("Error storing DNA data", err)
+				log.Println("Error storing DNA data", err)
 			}
 		})
 
