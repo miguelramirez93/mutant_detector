@@ -5,17 +5,10 @@ import (
 	"mutant_detector/domain/dna"
 
 	"gorm.io/gorm"
-
-	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 type gormIsMutantRepository struct {
 	db *gorm.DB
-}
-
-type dnaReportPostgres struct {
-	dna.DnaReport
-	DnaMatrix postgres.Jsonb `gorm:"type:jsonb;unique;index"`
 }
 
 // NewGormIsMutantRepository creates a new instance of IsMutantRepo for gorm provider
