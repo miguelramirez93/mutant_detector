@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/miguelramirez93/mutant_detector.svg?branch=master)](https://travis-ci.com/miguelramirez93/mutant_detector)
-
+[![Build Status](https://travis-ci.com/miguelramirez93/mutant_detector.svg?branch=master)](https://travis-ci.com/miguelramirez93/mutant_detector)[![Coverage Status](https://coveralls.io/repos/github/miguelramirez93/mutant_detector/badge.svg?branch=master)](https://coveralls.io/github/miguelramirez93/mutant_detector?branch=master)
 # mutant_detector
 
 This is a sample project with clean architecture applied with go
