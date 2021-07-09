@@ -20,4 +20,4 @@ After your environment is ready, you can navigate to:
 
 
 current deployed env:
-- https://mutant-detector-v1.herokuapp.com/swagger/index.html
+- https://mutant-detector-ml-2.herokuapp.com/swagger/index.html
