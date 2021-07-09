@@ -24,7 +24,7 @@ func NewDnaHandler(r *gin.Engine, isMutantUcase dna.IsMutantUsecase, getDnaRepor
 	}
 
 	r.POST("/mutant", handler.IsMutant)
-	r.POST("/stats", handler.GetDnaReportStats)
+	r.GET("/stats", handler.GetDnaReportStats)
 }
 
 // IsMutant godoc
@@ -77,7 +77,7 @@ func (h *DnaHandler) IsMutant(c *gin.Context) {
 // @Produce  json
 // @Success 200 {object} dna.DnaReportStats
 // @Failure 400 {object} apperrors.DeliveryError
-// @Router /stats [post]
+// @Router /stats [get]
 // GetDnaReportStats handlr for http request to getDnaReportStats use case
 func (h *DnaHandler) GetDnaReportStats(c *gin.Context) {
 	var (

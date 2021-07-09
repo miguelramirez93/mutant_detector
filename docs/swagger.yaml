@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   apperrors.DeliveryError:
     properties:
@@ -27,10 +26,6 @@ definitions:
     type: object
 info:
   contact: {}
-  description: This is a sample server celler server.
-  termsOfService: http://swagger.io/terms/
-  title: Mutant detector API
-  version: "1.0"
 paths:
   /mutant:
     post:
@@ -55,7 +50,7 @@ paths:
             $ref: '#/definitions/apperrors.DeliveryError'
       summary: Check if given dna is from a mutant
   /stats:
-    post:
+    get:
       consumes:
       - application/json
       description: return db stats about dna

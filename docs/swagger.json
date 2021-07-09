@@ -1,13 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server celler server.",
-        "title": "Mutant detector API",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {},
-        "version": "1.0"
+        "contact": {}
     },
-    "basePath": "/",
     "paths": {
         "/mutant": {
             "post": {
@@ -44,7 +39,7 @@
             }
         },
         "/stats": {
-            "post": {
+            "get": {
                 "description": "return db stats about dna",
                 "consumes": [
                     "application/json"

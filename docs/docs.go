@@ -18,7 +18,6 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
         "contact": {},
         "version": "{{.Version}}"
     },
@@ -60,7 +59,7 @@ var doc = `{
             }
         },
         "/stats": {
-            "post": {
+            "get": {
                 "description": "return db stats about dna",
                 "consumes": [
                     "application/json"
@@ -140,12 +139,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "1.0",
+	Version:     "",
 	Host:        "",
-	BasePath:    "/",
+	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "Mutant detector API",
-	Description: "This is a sample server celler server.",
+	Title:       "",
+	Description: "",
 }
 
 type s struct{}
